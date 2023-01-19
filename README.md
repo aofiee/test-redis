@@ -36,7 +36,7 @@ REDIS_PORT = 6379
 ```
 docker-compose up -d && docker-compose logs --follow
 ```
-4. Have Document for rest api in service1 and service2 directory "doc.rest"
+4. Have a document for rest api in service1 and service2 directory "docs.rest"
 use in vscode extension "rest client" for create machine and stock
 
 Instructions
