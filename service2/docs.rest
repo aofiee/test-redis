@@ -1,0 +1,17 @@
+### Update Stock
+PUT http://127.0.0.1:9091/v1/api/stock
+Content-Type: application/json
+
+{
+    "id": 1,
+    "stock": 1000000,
+    "updated_by": "taobin2"
+}
+
+### Get Stock by ID
+GET http://127.0.0.1:9091/v1/api/stock/1
+Content-Type: application/json
+
+### Query Stock
+GET http://127.0.0.1:9091/v1/api/stock
+Content-Type: application/json
