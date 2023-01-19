@@ -1,6 +1,8 @@
 Installation
 1. create "db" directory in root project for store postgres database
 2. config .env in service1 and service2 project
+
+service1 env
 ```
 APP_PORT=9090
 POSTGRES_HOST=database
@@ -14,6 +16,22 @@ REDIS_PASSWORD = password
 REDIS_HOST = redis
 REDIS_PORT = 6379
 ```
+
+service2 env
+```
+APP_PORT=9091
+POSTGRES_HOST=database
+POSTGRES_PORT=5432
+POSTGRES_USERNAME=postgres
+POSTGRES_PASSWORD=postgres
+POSTGRES_DATABASE=postgres
+POSTGRES_SSLMODE=false
+
+REDIS_PASSWORD = password
+REDIS_HOST = redis
+REDIS_PORT = 6379
+```
+
 3. run docker to start database, redis, go service
 ```
 docker-compose up -d && docker-compose logs --follow
