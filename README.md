@@ -39,7 +39,12 @@ docker-compose up -d && docker-compose logs --follow
 4. Have a document for rest api in service1 and service2 directory "docs.rest"
 use in vscode extension "rest client" for create machine and stock
 
-*** Not unit test if you need in test tell me back 
+*** Note
+In service2 on branch "unit-test" I code some unit test
+can run in directory service2 with command
+```
+go test ./... -cover 
+```
 
 Best Regards,.
 Khomkrid L.
