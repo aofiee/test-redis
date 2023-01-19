@@ -39,6 +39,11 @@ docker-compose up -d && docker-compose logs --follow
 4. Have a document for rest api in service1 and service2 directory "docs.rest"
 use in vscode extension "rest client" for create machine and stock
 
+*** Not unit test if you need in test tell me back 
+
+Best Regards,.
+Khomkrid L.
+
 Instructions
 1. Build the Publish-Subscribe mechanism. Allow ISubscriber objects to register against an concrete IPublishSubscribeService object for an event type. Implement the publish method so that when a publish event occurs, all subscribers of that the event type published will have a chance to handle the event. The subscribers should be working off a shared array of Machine objects, mutating them depending on the event received.
 2. Now add the method 'unsubscribe' on IPublishSubscribeService to allow handlers to unsubscribe from events. You may change the existing method signatures.
