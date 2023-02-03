@@ -28,7 +28,7 @@ Content-Type: application/json
 }
 
 ### Get Machine by ID
-GET http://127.0.0.1:9090/v1/api/machine/2
+GET http://127.0.0.1:9090/v1/api/machine/4
 Content-Type: application/json
 
 ### Query Machine
