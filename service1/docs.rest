@@ -3,7 +3,7 @@ POST http://127.0.0.1:9090/v1/api/machine
 Content-Type: application/json
 
 {
-    "machine": "001",
+    "machine": "Ramkhamhaeng",
     "stock": 100,
     "created_by": "taobin"
 }
@@ -13,8 +13,8 @@ PUT http://127.0.0.1:9090/v1/api/machine
 Content-Type: application/json
 
 {
-    "id": 3,
-    "machine": "003",
+    "id": 4,
+    "machine": "Ramkhamhaeng",
     "stock": 2,
     "updated_by": "taobin2"
 }

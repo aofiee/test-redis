@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"taobin-service/internal/core/domain"
 	"taobin-service/internal/core/ports"
+	"time"
 
 	"github.com/go-redis/redis/v9"
 	"github.com/sirupsen/logrus"
@@ -16,6 +17,7 @@ const (
 	LowStockWarningEvent        = "StockWarningSubscriber"
 	MachineRefillSubscriber     = "MachineRefillSubscriber"
 	StockLevelOkEvent           = "StockLevelOkSubscriber"
+	jobKey                      = "convert"
 )
 
 type Service struct {
@@ -28,8 +30,24 @@ func New(repo ports.Repository, redis *redis.Client) *Service {
 		repo:  repo,
 		redis: redis,
 	}
+	service.Worker(redis)
 	service.MachineRefillSubscriber(redis)
 	return service
+}
+
+func (s *Service) Worker(redis *redis.Client) {
+	go func() {
+		logrus.Info("Starting worker")
+		for {
+			result, err := redis.BLPop(context.Background(), 0*time.Second, jobKey).Result()
+			if err != nil {
+				logrus.Error(err)
+			}
+			if len(result) == 2 {
+				fmt.Println("Executing job: ", result[1])
+			}
+		}
+	}()
 }
 
 func (s *Service) MachineRefillSubscriber(redis *redis.Client) {
@@ -97,6 +115,11 @@ func (s *Service) UpdateMachine(payload domain.MachineRequest) (*domain.MachineR
 		if err != nil {
 			logrus.Errorln(err)
 		}
+		result, err := s.redis.RPush(context.Background(), jobKey, pubData).Result()
+		if err != nil {
+			logrus.Errorln(err)
+		}
+		logrus.Info("Example Job queued: ", result)
 	}
 	machine, err := s.repo.UpdateMachine(payload)
 	if err != nil {

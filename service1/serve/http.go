@@ -82,7 +82,7 @@ func ServeHTTP() error {
 		return err
 	}
 
-	fmt.Println("Listerning on port: ", configs.GetConfig().App.Port)
+	fmt.Println("Listening on port: ", configs.GetConfig().App.Port)
 	return nil
 
 }
