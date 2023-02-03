@@ -44,7 +44,12 @@ func (s *Service) Worker(redis *redis.Client) {
 				logrus.Error(err)
 			}
 			if len(result) == 2 {
-				fmt.Println("Executing job: ", result[1])
+				ctx := context.Background()
+				logrus.Info("Executing job LowStockWarningEvent")
+				err = s.redis.Publish(ctx, LowStockWarningEvent, result[1]).Err()
+				if err != nil {
+					logrus.Errorln(err)
+				}
 			}
 		}
 	}()
@@ -106,20 +111,20 @@ func (s *Service) CreateMachine(payload domain.MachineRequest) (*domain.MachineR
 func (s *Service) UpdateMachine(payload domain.MachineRequest) (*domain.MachineResponse, error) {
 	if *payload.Stock < minimumStock {
 		ctx := context.Background()
-		logrus.Info("LowStockWarningEvent")
+		// logrus.Info("LowStockWarningEvent")
 		pubData, err := json.Marshal(payload)
 		if err != nil {
 			logrus.Errorln(err)
 		}
-		err = s.redis.Publish(ctx, LowStockWarningEvent, pubData).Err()
+		// err = s.redis.Publish(ctx, LowStockWarningEvent, pubData).Err()
+		// if err != nil {
+		// 	logrus.Errorln(err)
+		// }
+		result, err := s.redis.RPush(ctx, jobKey, pubData).Result()
 		if err != nil {
 			logrus.Errorln(err)
 		}
-		result, err := s.redis.RPush(context.Background(), jobKey, pubData).Result()
-		if err != nil {
-			logrus.Errorln(err)
-		}
-		logrus.Info("Example Job queued: ", result)
+		logrus.Info("Add Refill Job queued: ", result)
 	}
 	machine, err := s.repo.UpdateMachine(payload)
 	if err != nil {
